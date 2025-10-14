@@ -10,11 +10,11 @@ local_tz = pendulum.timezone("America/New_York")
 
 def save_to_csv(**kwargs):
     df = pd.DataFrame({"height": [177, 185, 162], "width": [200, 500, 100]})
-    df.to_csv("/shared_path/output.csv", index=False)
+    df.to_csv("./shared_path/output.csv", index=False)
 
 
 def read_from_csv(**kwargs):
-    df = pd.read_csv("/shared_path/output.csv")
+    df = pd.read_csv("./shared_path/output.csv")
     print(df)
 
 
