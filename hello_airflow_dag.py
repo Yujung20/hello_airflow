@@ -1,4 +1,3 @@
-from asyncio import tasks
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
@@ -9,7 +8,7 @@ local_tz = pendulum.timezone("Asia/Seoul")
 default_args = {
     "owner": "Yujung20",
     "depends_on_past": False,
-    "start_date": datetime(2023, 1, 1, tzinfo=local_tz),
+    "start_date": datetime(2025, 10, 14, tzinfo=local_tz),
     "email_on_failure": False,
     "email_on_retry": False,
     "retries": 1,
@@ -33,7 +32,7 @@ def review_word(word):
 previous_task = None
 for i, word in enumerate(input_words.split()):
     task = PythonOperator(
-        task_id=f"word_{i}",
+        taskid=f"word{i}",
         python_callable=review_word,
         op_kwargs={"word": word},
         dag=dag,
@@ -41,3 +40,4 @@ for i, word in enumerate(input_words.split()):
 
     if previous_task:
         previous_task >> task
+    previous_task = task
