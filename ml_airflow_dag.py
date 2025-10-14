@@ -54,12 +54,11 @@ def train_model(model_name, **kwargs):
     x_train = pd.read_json(ti.xcom_pull(key="x_train", task_ids="feature_engineering"))
     x_test = pd.read_json(ti.xcom_pull(key="x_test", task_ids="feature_engineering"))
     y_train = pd.Series(
-        ti.xcom_pull(key="y_train", task_ids="feature_engineering"), type="series"
+        ti.xcom_pull(key="y_train", task_ids="feature_engineering"), typ="series"
     )
     y_test = pd.Series(
-        ti.xcom_pull(key="y_train", task_ids="feature_engineering"), type="series"
+        ti.xcom_pull(key="y_test", task_ids="feature_engineering"), typ="series"
     )
-
     # 모델 학습
     if model_name == "RandomForest":
         model = RandomForestClassifier(random_state=42)
