@@ -14,7 +14,7 @@ def save_to_csv(**kwargs):
 
 
 def read_from_csv(**kwargs):
-    df = pd.read_csv("./shared_path/output.csv")
+    df = pd.read_csv("./shared_path/output.csv", encoding="cp949")
     print(df)
 
 
