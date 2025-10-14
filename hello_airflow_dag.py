@@ -19,7 +19,7 @@ dag = DAG(
     "Hello_Airflow_PythonOperator",
     default_args=default_args,
     description="my first airflow practice",
-    schedule_interval=timedelta(days=1),
+    schedule_interval=timedelta(minutes=1),
 )
 
 input_words = "python very easy, airflow very easy."
@@ -32,7 +32,7 @@ def review_word(word):
 previous_task = None
 for i, word in enumerate(input_words.split()):
     task = PythonOperator(
-        taskid=f"word{i}",
+        taskid=f"word_{i}",
         python_callable=review_word,
         op_kwargs={"word": word},
         dag=dag,
