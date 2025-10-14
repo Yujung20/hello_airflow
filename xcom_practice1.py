@@ -9,7 +9,7 @@ local_tz = pendulum.timezone("America/New_York")
 
 def task_1(**kwargs):
     ti = kwargs["ti"]
-    ti.xcom_push(key="my_data", value="Hello form task 1")
+    ti.xcom_push(key="my_data", value="Hello from task 1")
 
 
 def task_2(**kwargs):
