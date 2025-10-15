@@ -32,12 +32,12 @@ dag = DAG(
 def feature_engineering(**kwargs):
     # load the iris data
     iris = load_iris()
-    x = pd.DataFrame(iris["data"], columns=iris["feature_names"])
+    X = pd.DataFrame(iris["data"], columns=iris["feature_names"])
     y = pd.Series(iris["target"], name="target")
 
     # Data 분할(x_train, x_test, y_train, y_test)
     x_train, x_test, y_train, y_test = train_test_split(
-        x, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=42
     )
 
     # XCom을 이용해 데이터 저장
@@ -51,14 +51,15 @@ def feature_engineering(**kwargs):
 def train_model(model_name, **kwargs):
     # XCom에서 데이터 불러오기
     ti = kwargs["ti"]
-    x_train = pd.read_json(ti.xcom_pull(key="x_train", task_ids="feature_engineering"))
-    x_test = pd.read_json(ti.xcom_pull(key="x_test", task_ids="feature_engineering"))
-    y_train = pd.Series(
-        ti.xcom_pull(key="y_train", task_ids="feature_engineering"), typ="series"
-    )
-    y_test = pd.Series(
-        ti.xcom_pull(key="y_test", task_ids="feature_engineering"), typ="series"
-    )
+    X_train = pd.read_json(ti.xcom_pull(key="x_train", task_ids="feature_engineering"))
+    X_test = pd.read_json(ti.xcom_pull(key="x_test", task_ids="feature_engineering"))
+    y_train = pd.read_json(
+        ti.xcom_pull(key="y_train", task_ids="feature_engineering"), orient="records"
+    ).squeeze()
+    y_test = pd.read_json(
+        ti.xcom_pull(key="y_test", task_ids="feature_engineering"), orient="records"
+    ).squeeze()
+
     # 모델 학습
     if model_name == "RandomForest":
         model = RandomForestClassifier(random_state=42)
@@ -67,8 +68,8 @@ def train_model(model_name, **kwargs):
     else:
         raise ValueError("Unsupported model name")
 
-    model.fit(x_train, y_train)
-    y_pred = model.predict(x_test)
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
 
     # 모델 평가(accuracy)
     acc = accuracy_score(y_test, y_pred)
@@ -86,7 +87,7 @@ def select_best_model(**kwargs):
     gb_acc = ti.xcom_pull(key="acc_GradientBoosting", task_ids="train_gb")
 
     # 더 좋은 모델이 무엇인지? 출력
-    best_model = "RandomForest" if rf_acc < gb_acc else "GradientBoosting"
+    best_model = "RandomForest" if rf_acc > gb_acc else "GradientBoosting"
     print(f"the best models is {best_model} with accuracy {max(rf_acc, gb_acc)}")
 
 
@@ -94,27 +95,23 @@ with dag:
     t1 = PythonOperator(
         task_id="feature_engineering",
         python_callable=feature_engineering,
-        provide_context=True,
     )
 
     t2 = PythonOperator(
         task_id="train_rf",
         python_callable=train_model,
         op_kwargs={"model_name": "RandomForest"},
-        provide_context=True,
     )
 
     t3 = PythonOperator(
         task_id="train_gb",
         python_callable=train_model,
         op_kwargs={"model_name": "GradientBoosting"},
-        provide_context=True,
     )
 
     t4 = PythonOperator(
         task_id="select_best_model",
         python_callable=select_best_model,
-        provide_context=True,
     )
 
     t1 >> [t2, t3] >> t4
