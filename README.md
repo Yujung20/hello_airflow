@@ -1,7 +1,7 @@
 # HELLO_AIRFLOW
 
-Docker 기반 Apache Airflow 실습 프로젝트
-Docker-based Apache Airflow practice project.
+Docker 기반 Apache Airflow 실습 프로젝트<br>
+**(ENG)Docker-based Apache Airflow practice project**
 
 ---
 
@@ -16,10 +16,12 @@ Docker-based Apache Airflow practice project.
 
 ## Project Summary
 
-Docker 환경에서 Apache Airflow를 실행하고,
-DAG 기반 workflow 및 XCom 기능을 실습한 프로젝트입니다.
+Docker 환경에서 Apache Airflow를 실행하고,<br>
+DAG 기반 workflow 및 XCom 기능을 실습한 프로젝트입니다.<br>
 
 task dependency와 task 간 데이터 전달 구조를 학습했습니다.
+
+**Eng ver.** 
 
 This project was created to practice running Apache Airflow in a Docker environment and to understand DAG-based workflows and XCom features.
 
@@ -35,6 +37,8 @@ It includes task dependency configuration and inter-task data communication usin
 - DAG 기반 workflow orchestration 학습
 - XCom을 활용한 task 간 데이터 전달 실습
 
+**Eng ver.** 
+
 - Understand the basic structure of Apache Airflow
 - Gain experience with Docker-based environment setup
 - Learn DAG-based workflow orchestration
@@ -44,11 +48,13 @@ It includes task dependency configuration and inter-task data communication usin
 
 ## Why I Built This
 
-데이터 파이프라인 자동화와 workflow orchestration 구조에 관심이 생기면서,
-Apache Airflow가 실제로 어떤 방식으로 task를 관리하는지 직접 경험해보기 위해 진행했습니다.
+데이터 파이프라인 자동화와 workflow orchestration 구조에 관심이 생기면서,<br>
+Apache Airflow가 실제로 어떤 방식으로 task를 관리하는지 직접 경험해보기 위해 진행했습니다.<br>
 
 또한 Docker 기반 환경 구성을 통해
 컨테이너 실행 환경과 서비스 관리 구조를 함께 학습하고자 했습니다.
+
+**Eng ver.** 
 
 As I became interested in data pipeline automation and workflow orchestration, I wanted to explore how Apache Airflow manages and executes tasks in practice.
 
@@ -80,6 +86,8 @@ HELLO_AIRFLOW/
 - PythonOperator 기반 task 작성
 - task dependency 설정 실습
 
+&nbsp;&nbsp; **Eng ver.** 
+
 - Created tasks using PythonOperator
 - Practiced task dependency configuration
 
@@ -88,6 +96,8 @@ HELLO_AIRFLOW/
 - task 간 데이터 전달 구조 실습
 - `xcom_push`, `xcom_pull` 사용
 
+&nbsp;&nbsp;**Eng ver.** 
+
 - Practiced inter-task data communication
 - Used `xcom_push` and `xcom_pull`
 
@@ -95,6 +105,8 @@ HELLO_AIRFLOW/
 
 - Docker 기반 Airflow 실행 환경 구성
 - 컨테이너 환경에서 workflow 실행 실습
+
+&nbsp;&nbsp;**Eng ver.** 
 
 - Built an Airflow execution environment using Docker
 - Practiced running workflows in a containerized environment
@@ -116,6 +128,8 @@ docker run hello_airflow
 - Airflow DAG 구조 및 workflow orchestration 개념 학습
 - task dependency 설정 방식 경험
 - XCom을 활용한 task 간 데이터 전달 구조 이해
+
+**Eng ver.** 
 
 - Understanding Docker-based execution environments
 - Learning DAG-based workflow orchestration concepts
